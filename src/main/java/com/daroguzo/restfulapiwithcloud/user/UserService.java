@@ -18,7 +18,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(RuntimeException::new);
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(String.format("ID[%s] is not found", id)));
     }
 
     @Transactional
