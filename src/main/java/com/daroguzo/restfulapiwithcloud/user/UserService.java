@@ -22,12 +22,12 @@ public class UserService {
     }
 
     @Transactional
-    public void register(UserDto userDto) {
+    public User register(UserDto userDto) {
         User newUser = User.builder()
                 .name(userDto.getName())
                 .joinDate(LocalDateTime.now())
                 .build();
 
-        userRepository.save(newUser);
+        return userRepository.save(newUser);
     }
 }

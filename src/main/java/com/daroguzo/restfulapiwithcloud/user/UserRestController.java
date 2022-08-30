@@ -1,8 +1,11 @@
 package com.daroguzo.restfulapiwithcloud.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,7 +25,14 @@ public class UserRestController {
     }
 
     @PostMapping("/users")
-    public void createUser(@RequestBody UserDto userDto) {
-        userService.register(userDto);
+    public ResponseEntity<User> createUser(@RequestBody UserDto userDto) {
+        User newUser = userService.register(userDto);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newUser.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build() ;
     }
 }
