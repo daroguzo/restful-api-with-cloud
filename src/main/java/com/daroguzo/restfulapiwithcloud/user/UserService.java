@@ -25,7 +25,7 @@ public class UserService {
     public User register(UserDto userDto) {
         User newUser = User.builder()
                 .name(userDto.getName())
-                .joinDate(LocalDateTime.now())
+                .created(LocalDateTime.now())
                 .build();
 
         return userRepository.save(newUser);
@@ -35,5 +35,12 @@ public class UserService {
     public void delete(Long id) {
         User foundId = findById(id);
         userRepository.delete(foundId);
+    }
+
+    @Transactional
+    public User reviseName(Long id, String newName) {
+        User foundId = findById(id);
+        foundId.setName(newName);
+        return foundId;
     }
 }

@@ -33,7 +33,19 @@ public class UserRestController {
                 .buildAndExpand(newUser.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).build() ;
+        return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> reviseName(@PathVariable Long id, @RequestBody UserDto userDto) {
+        User newUser = userService.reviseName(id, userDto.getName());
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newUser.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("/users/{id}")

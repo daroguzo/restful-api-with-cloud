@@ -23,7 +23,7 @@ public class User {
     private String name;
 
     @Column
-    private LocalDateTime joinDate;
+    private LocalDateTime created;
 
 
 
