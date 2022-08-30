@@ -35,4 +35,9 @@ public class UserRestController {
 
         return ResponseEntity.created(location).build() ;
     }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+    }
 }

@@ -30,4 +30,10 @@ public class UserService {
 
         return userRepository.save(newUser);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        User foundId = findById(id);
+        userRepository.delete(foundId);
+    }
 }
