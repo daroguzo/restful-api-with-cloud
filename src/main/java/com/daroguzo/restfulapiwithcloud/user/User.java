@@ -25,6 +25,7 @@ public class User {
     @Column
     private LocalDateTime created;
 
-
+    @Column
+    private LocalDateTime revised;
 
 }

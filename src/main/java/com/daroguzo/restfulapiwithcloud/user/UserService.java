@@ -41,6 +41,7 @@ public class UserService {
     public User reviseName(Long id, String newName) {
         User foundId = findById(id);
         foundId.setName(newName);
+        foundId.setRevised(LocalDateTime.now());
         return foundId;
     }
 }
