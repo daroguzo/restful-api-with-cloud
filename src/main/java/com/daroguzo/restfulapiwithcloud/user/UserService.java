@@ -25,6 +25,8 @@ public class UserService {
     public User register(UserDto userDto) {
         User newUser = User.builder()
                 .name(userDto.getName())
+                .password(userDto.getPassword())
+                .ssn(userDto.getSsn())
                 .created(LocalDateTime.now())
                 .build();
 
