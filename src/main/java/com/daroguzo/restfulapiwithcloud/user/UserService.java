@@ -3,6 +3,7 @@ package com.daroguzo.restfulapiwithcloud.user;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,26 @@ public class UserService {
         SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
 
         MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping;
+    }
+
+    public MappingJacksonValue findByIdUsingFilterV2(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("ID[%s] is not found", id)));
+
+        // User -> UserV2
+        UserV2 userV2 = new UserV2();
+        BeanUtils.copyProperties(user, userV2);
+        userV2.setGrade("VIP");
+
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+                .filterOutAllExcept("id", "name", "grade", "created", "revised");
+
+        SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(userV2);
         mapping.setFilters(filters);
 
         return mapping;

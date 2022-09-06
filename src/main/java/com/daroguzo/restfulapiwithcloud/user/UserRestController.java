@@ -15,18 +15,18 @@ public class UserRestController {
 
     private final UserService userService;
 
-    @GetMapping("/users")
-    public List<User> retrieveAllUser() {
+    @GetMapping("/v1/users")
+    public List<User> retrieveAllUserV1() {
         return userService.findAll();
     }
 
-    @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable Long id) {
+    @GetMapping("/v1/users/{id}")
+    public User retrieveUserV1(@PathVariable Long id) {
         return userService.findById(id);
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody @Valid UserDto userDto) {
+    @PostMapping("/v1/users")
+    public ResponseEntity<User> createUserV1(@RequestBody @Valid UserDto userDto) {
         User newUser = userService.register(userDto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -37,8 +37,8 @@ public class UserRestController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<User> reviseName(@PathVariable Long id, @RequestBody UserDto userDto) {
+    @PutMapping("/v1/users/{id}")
+    public ResponseEntity<User> reviseNameV1(@PathVariable Long id, @RequestBody UserDto userDto) {
         User newUser = userService.reviseName(id, userDto.getName());
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -49,8 +49,8 @@ public class UserRestController {
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    @DeleteMapping("/v1/users/{id}")
+    public void deleteUserV1(@PathVariable Long id) {
         userService.delete(id);
     }
 }

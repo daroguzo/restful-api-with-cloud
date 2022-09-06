@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminUserController {
     private final UserService userService;
 
-    @GetMapping("/users")
-    public MappingJacksonValue retrieveAllUser() {
+    @GetMapping("/v1/users")
+    public MappingJacksonValue retrieveAllUserV1() {
         return userService.findAllUsingFilter();
     }
 
-    @GetMapping("/users/{id}")
-    public MappingJacksonValue retrieveUser(@PathVariable Long id) {
+    @GetMapping("/v1/users/{id}")
+    public MappingJacksonValue retrieveUserV1(@PathVariable Long id) {
         return userService.findByIdUsingFilter(id);
+    }
+
+    @GetMapping("/v2/users/{id}")
+    public MappingJacksonValue retrieveUserV2(@PathVariable Long id) {
+        return userService.findByIdUsingFilterV2(id);
     }
 }
