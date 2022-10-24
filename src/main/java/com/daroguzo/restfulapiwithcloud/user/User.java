@@ -23,6 +23,12 @@ public class User {
     private String name;
 
     @Column
+    private String password;
+
+    @Column
+    private String ssn;
+
+    @Column
     private LocalDateTime created;
 
     @Column
