@@ -1,6 +1,8 @@
 package com.daroguzo.restfulapiwithcloud.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -8,6 +10,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,8 +25,14 @@ public class UserRestController {
     }
 
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable Long id) {
-        return userService.findById(id);
+    public EntityModel<User> retrieveUser(@PathVariable Long id) {
+        // HATEOAS
+        User user = userService.findById(id);
+        EntityModel<User> model = EntityModel.of(user);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUser());
+        model.add(linkTo.withRel("all-users"));
+
+        return model;
     }
 
     @PostMapping("/users")
