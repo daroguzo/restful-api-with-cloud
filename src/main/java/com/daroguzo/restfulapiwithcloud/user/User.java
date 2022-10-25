@@ -1,15 +1,14 @@
 package com.daroguzo.restfulapiwithcloud.user;
 
 
+import com.daroguzo.restfulapiwithcloud.post.Post;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter @Builder
 @NoArgsConstructor
@@ -33,6 +32,9 @@ public class User {
     @Column
     @ApiModelProperty(notes ="사용자 주민번호를 입력해 주세요")
     private String ssn;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     @Column
     private LocalDateTime created;
